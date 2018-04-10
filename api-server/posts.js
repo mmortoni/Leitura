@@ -124,8 +124,8 @@ function add(token, post) {
     }
 
     posts.allIds.push(post.id)
-
-    res(posts[post.id])
+    
+    res(posts.byId[post.id])
   })
 }
 

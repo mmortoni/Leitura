@@ -15,8 +15,8 @@ const headers = {
 }
 
 describe('Testes Udacity Readable API', () => {
-    var categorias;
-/*
+    let categorias=[];
+
     it('GET /                   ==> Retorno text/html; charset=utf-8.', done => {
         readableAPI
             .get('/')
@@ -24,28 +24,28 @@ describe('Testes Udacity Readable API', () => {
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
             .end((err, res) => {
-                //console.log(res)
                 if (err) return done(err);
                 done();
             });
     });
-  
+ 
     it('GET /categories         ==> Obter todas as categorias disponíveis para o aplicativo.', done => {
         readableAPI
         .get('/categories')
         .set(headers)
         .expect(200)
         .then(res => {
-            categorias = res.body.categories;
-            expect(res.body.categories).toBeInstanceOf(Array);
+            Object.keys(res.body.byId).forEach(function(key,index) {
+                categorias.push(res.body.byId[key].name);
+            });            
+            expect(res.body.byId).toBeInstanceOf(Object);
             done();
         })
     });
-
     it('GET /:category/posts    ==> Obter todas as postagens para uma categoria específica.', done => {
         categorias.forEach((categoria) => {
             readableAPI
-            .get(`/${categoria.name}/posts`)
+            .get(`/${categoria}/posts`)
             .set(headers)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(200)
@@ -67,13 +67,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    var id = new objectId();
-    var buffer = id.get().toString('base64');
-    var timestamp = parseInt(new Date().getTime()/1000, 10);
-
     let post = {
-        id: buffer.toLowerCase(),
-        timestamp: id.getTimestamp(),
         title: 'Inclusao de postagem na fase de testes',
         body: 'corpo da postagem .',
         author: 'author',
@@ -91,11 +85,13 @@ describe('Testes Udacity Readable API', () => {
         .expect(200)
         .then(res => {
             post.voteScore = 1;
-            expect(res.body).toEqual(post);
+            console.log(post);
+            console.log('res.body==>' + JSON.stringify(res.body));
+            expect(res.body.category).toEqual(post.category);
             done();
         })
     });
-
+/* 
     it('GET /posts/:id          ==> Obter os detalhes de uma única postagem.', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nds')
@@ -156,16 +152,9 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 */
-    var id = new objectId();
-    var buffer = id.get().toString('base64');
-    var timestamp = parseInt(new Date().getTime()/1000, 10);
- //   buffer = id.get().toString('base64');
- //   timestamp = parseInt(new Date().getTime()/1000, 10);
 
     let comment = {
-        id: buffer.toLowerCase(),
         parentId: "8xf0y6ziyjabvozdd253nds",
-        timestamp: timestamp,
         body: 'Corpo do comentario.',
         author: 'author',
         voteScore: 0,
@@ -180,12 +169,10 @@ describe('Testes Udacity Readable API', () => {
         .set(headers)
         .expect(200)
         .then(res => {
-            console.log('res.body.id==>' + res.body.id);
-            expect(res.body.id).toEqual(comment.id);
+            expect(res.body.author).toEqual(comment.author);
             done();
         })
     });
-    
 /*
     it('GET /comments/:id       ==> Obter os detalhes para um único comentário.', done => {
         readableAPI

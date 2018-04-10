@@ -70,7 +70,7 @@ describe('Testes Udacity Readable API', () => {
     let post = {
         title: 'Inclusao de postagem na fase de testes',
         body: 'corpo da postagem .',
-        author: 'author',
+        author: 'Author da Silva',
         category: 'react',
         voteScore: 0,
         deleted: false,
@@ -84,14 +84,11 @@ describe('Testes Udacity Readable API', () => {
         .send(post)
         .expect(200)
         .then(res => {
-            post.voteScore = 1;
-            console.log(post);
-            console.log('res.body==>' + JSON.stringify(res.body));
-            expect(res.body.category).toEqual(post.category);
+            expect(res.body.author).toEqual(post.author);
             done();
         })
     });
-/* 
+ 
     it('GET /posts/:id          ==> Obter os detalhes de uma única postagem.', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nds')
@@ -114,7 +111,7 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
-    
+   
     it('PUT /posts/:id          ==> Editar os detalhes de uma postagem existente.', done => {
         readableAPI
         .put('/posts/6ni6ok3ym7mf1p33lnez')
@@ -128,7 +125,7 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
-
+ 
     it('DELETE /posts/:id       ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
         readableAPI
         .delete('/posts/8xf0y6ziyjabvozdd253nd')
@@ -151,7 +148,6 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
-*/
 
     let comment = {
         parentId: "8xf0y6ziyjabvozdd253nds",
@@ -173,21 +169,23 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
-/*
+
     it('GET /comments/:id       ==> Obter os detalhes para um único comentário.', done => {
         readableAPI
-        .get(`/comments/${comments.id}`)
+        .get('/comments/894tuq4ut84ut8v4t8wun89g')
         .set(headers)
         .expect(200)
         .then(res => {
-            expect(res.body.id).toEqual(comments.id);
+            expect(res.body.id).toEqual('894tuq4ut84ut8v4t8wun89g');
             done();
         })
     });    
 
+    let timestamp = Math.floor(Date.now())
+
     it('PUT /comments/:id       ==> Editar os detalhes de uma postagem existente.', done => {
         readableAPI
-        .put(`/comments/${comments.id}`)
+        .put('/comments/894tuq4ut84ut8v4t8wun89g')
         .send({timestamp: timestamp, body: 'XCorpo do comentario.'})
         .set(headers)
         .expect(200)
@@ -208,5 +206,4 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
-*/
 });

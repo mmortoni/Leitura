@@ -59,9 +59,9 @@ function get(token, id) {
   return new Promise((res) => {
     const comments = getData(token)
     res(
-      comments[id].deleted || comments[id].parentDeleted
+      comments.byId[id].deleted || comments.byId[id].parentDeleted
         ? {}
-        : comments[id]
+        : comments.byId[id]
     )
   })
 }

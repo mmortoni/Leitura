@@ -65,9 +65,9 @@ function get(token, id) {
   return new Promise((res) => {
     const posts = getData(token)
     res(
-      posts[id].deleted
+      posts.byId[id].deleted
         ? {}
-        : posts[id]
+        : posts.byId[id]
     )
   })
 }

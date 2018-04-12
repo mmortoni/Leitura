@@ -109,14 +109,24 @@ export class PostsIndex extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <SearchInput
               value={params.q}
               onSearch={this.handleSearch}
               placeholder="Pesquisa de título..."
             />
           </div>
-          <div className="col-md-4">
+
+          <div className="col-md-3">
+            Categoria:&nbsp;
+            <select>
+            <option value="react">React</option>
+            <option value="redux">Redux</option>
+            <option value="udacity">Udacity</option>
+            </select>
+          </div>
+
+          <div className="col-md-3">
             Ordenar por:&nbsp;
             <select ref="refSelect"
               value={sort.sortKey}
@@ -128,6 +138,7 @@ export class PostsIndex extends React.Component {
               <option value="voteScore">Like</option>
               <option value="timestamp">Data</option>
             </select>&nbsp;
+                       
             <div className="btn-group btn-toggle vcenter">
               <button className="btn btn-md btn-default active" value="ASC" onClick={e => this.handleClick(e)}>
                 <span ref="refSpan" className="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>

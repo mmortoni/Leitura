@@ -6,6 +6,7 @@ import { POST } from '../../constants/constants'
 const initialState = Immutable({
   byId: {},
   params: {},
+  category: '',
   sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] }
 })
 
@@ -48,6 +49,7 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: state.sort || {},
         params: state.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     case POST.POST_UPDATE_SUCCESS:
@@ -77,6 +79,7 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: state.sort || {},
         params: state.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     case POST.POST_DELETE_SUCCESS:
@@ -87,6 +90,7 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: state.sort || {},
         params: state.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     case POST.POST_SORT_SUCESS:
@@ -101,6 +105,22 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: action.payload.sort || {},
         params: action.payload.props.params || {},
+        category: state.category || '',
+        byId: newById || {}
+      })
+      case POST.POST_CATEGORY_SUCESS:
+      newById = Object.assign({}, _(keyBy(state.byId, (post) => post.id))
+        .map(function (v, k) {
+          return _.merge({}, v, { key: k })
+        })
+        .value())
+
+      newById = _.orderBy(newById, action.payload.sort.sortKey, action.payload.sort.sortOrder)
+
+      return state.merge({
+        sort: action.payload.sort || {},
+        params: action.payload.props.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     default:

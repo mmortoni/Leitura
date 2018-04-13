@@ -16,6 +16,7 @@ import { EFFECTS } from '../constants/constants'
     return {
       sort: postsSelectors.getSort(state),
       params: postsSelectors.getParams(state),
+      category: postsSelectors.getCategory(state),
       posts: postsSelectors.getPosts(state),
     };
   }
@@ -78,6 +79,10 @@ export class PostsIndex extends React.Component {
     this.fetchPosts(p)
   }
 
+  onCategoryChange(value) {
+    this.context.store.dispatch(postsActions.categoryPosts({ category: value, props: this.props }))
+  }
+
   onSortingChange(value) {
     this.sortParams.sortKey = value
     this.context.store.dispatch(postsActions.sortPosts({ sort: this.sortParams, props: this.props }))
@@ -104,7 +109,7 @@ export class PostsIndex extends React.Component {
   }
 
   render() {
-    const { sort, params, posts } = this.props
+    const { sort, params, category, posts } = this.props
 
     return (
       <div>
@@ -119,7 +124,10 @@ export class PostsIndex extends React.Component {
 
           <div className="col-md-3">
             Categoria:&nbsp;
-            <select>
+            <select value={category}
+              onChange={e => this.onSortingChange(e.target.value)}
+            >
+            <option value="">Selecione uma categoria</option>
             <option value="react">React</option>
             <option value="redux">Redux</option>
             <option value="udacity">Udacity</option>

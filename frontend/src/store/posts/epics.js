@@ -74,3 +74,15 @@ export function votePost(action$) {
       );
     });
 }
+
+export function categoryPosts(action$) {
+  return action$.ofType(POST.POST_CATEGORY)
+    .map(action => action.payload)
+    .switchMap(payload => {
+      return Observable.merge(
+        Observable.fromPromise(
+          instanceAxios.post(`${payload.category}/posts/`)
+        ).map(res => postsActions.categorySuccess(res.data))
+      );
+    });
+}

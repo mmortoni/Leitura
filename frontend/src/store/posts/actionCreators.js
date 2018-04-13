@@ -55,3 +55,11 @@ export function sortPosts(payload) {
 export function sortSuccess(payload) {
   return { type: POST.POST_SORT_SUCESS, payload };
 }
+
+export function categoryPosts(payload) {
+  return { type: POST.POST_CATEGORY, payload };
+}
+
+export function categorySuccess(payload) {
+  return { type: POST.POST_CATEGORY_SUCESS, payload };
+}

@@ -2,6 +2,10 @@ export function getParams(state) {
   return state.posts.params;
 }
 
+export function getCategory(state) {
+  return state.posts.category;
+}
+
 export function getSort(state) {
   return state.posts.sort;
 }

@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: state.sort || {},
         params: action.payload.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     case POST.POST_CREATE_SUCCESS:
@@ -65,6 +66,7 @@ export default (state = initialState, action) => {
       return state.merge({
         sort: state.sort || {},
         params: state.params || {},
+        category: state.category || '',
         byId: newById || {}
       })
     case POST.POST_VOTE_SUCCESS:
@@ -108,19 +110,19 @@ export default (state = initialState, action) => {
         category: state.category || '',
         byId: newById || {}
       })
-      case POST.POST_CATEGORY_SUCESS:
-      newById = Object.assign({}, _(keyBy(state.byId, (post) => post.id))
-        .map(function (v, k) {
-          return _.merge({}, v, { key: k })
-        })
-        .value())
+    case POST.POST_CATEGORY_SUCESS:
+      newById = Object.assign({}, _(keyBy(action.payload.data[0], (post) => post.id))
+      .map(function (v, k) {
+        return _.merge({}, v, { key: k })
+      })
+      .value())
 
-      newById = _.orderBy(newById, action.payload.sort.sortKey, action.payload.sort.sortOrder)
+      newById = _.orderBy(newById, action.payload.p.props.sort.sortKey, action.payload.p.props.sort.sortOrder)
 
       return state.merge({
-        sort: action.payload.sort || {},
-        params: action.payload.props.params || {},
-        category: state.category || '',
+        sort: action.payload.p.props.sort || {},
+        params: action.payload.p.props.params || {},
+        category: action.payload.p.category || '',
         byId: newById || {}
       })
     default:

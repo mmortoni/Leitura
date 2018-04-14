@@ -81,8 +81,8 @@ export function categoryPosts(action$) {
     .switchMap(payload => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.post(`${payload.category}/posts/`)
-        ).map(res => postsActions.categorySuccess(res.data))
+          instanceAxios.get(`/${payload.category}/posts`)
+        ).map(res => postsActions.categorySuccess({data: res.data, p: payload}))
       );
     });
 }

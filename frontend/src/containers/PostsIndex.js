@@ -37,6 +37,7 @@ export class PostsIndex extends React.Component {
     this.deletePostModal = this.deletePostModal.bind(this)
     this.handleSearch = this.handleSearch.bind(this, 'title')
     this.onSortingChange = this.onSortingChange.bind(this)
+    this.onCategoryChange = this.onCategoryChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.votePost = this.votePost.bind(this)
   }
@@ -125,9 +126,9 @@ export class PostsIndex extends React.Component {
           <div className="col-md-3">
             Categoria:&nbsp;
             <select value={category}
-              onChange={e => this.onSortingChange(e.target.value)}
+              onChange={e => this.onCategoryChange(e.target.value)}
             >
-            <option value="">Selecione uma categoria</option>
+            <option value="0">Selecione uma categoria</option>
             <option value="react">React</option>
             <option value="redux">Redux</option>
             <option value="udacity">Udacity</option>

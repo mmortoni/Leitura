@@ -55,9 +55,21 @@ function getData(token) {
 function getByCategory(token, category) {
   return new Promise((res) => {
     let posts = getData(token)
-    let keys = Object.keys(posts)
-    let filtered_keys = keys.filter(key => posts[key].category === category && !posts[key].deleted)
-    res(filtered_keys.map(key => posts[key]))
+    let result = []
+
+    result.push(Object.keys(posts['byId'])
+      .filter(keyF => !posts['byId'][keyF].deleted)
+      .map(keyM => posts['byId'][keyM])
+    )
+
+    if( category !== '0' ) {
+      category = category.toLowerCase()
+      result[0] = result[0].filter(post => (post['category'].toLowerCase().indexOf(category) !== -1)).map(p => p)
+    }
+
+    result.push(result[0].map(post => post.id))
+
+    res(result)
   })
 }
 
@@ -96,8 +108,7 @@ function getAll(token, q, field) {
 
         return fieldMatch
       }
-      )
-        .map(post => post)
+      ).map(post => post)
     }
 
     result.push(result[0].map(post => post.id))
@@ -124,7 +135,7 @@ function add(token, post) {
     }
 
     posts.allIds.push(post.id)
-    
+
     res(posts.byId[post.id])
   })
 }

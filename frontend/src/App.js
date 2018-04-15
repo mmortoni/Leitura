@@ -69,7 +69,7 @@ export default () => {
           <Route path="/posts/:postId/comment" component={PostsComment} />
           <Route path="/posts/:postId/comment/new" component={PostsCommentNew} />
           <Route path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
-          <Route path='*' component={NotFound} />
+          <Route path='*' component={NotFound} status={404} />
         </Route>
       </Router>
     </Provider>

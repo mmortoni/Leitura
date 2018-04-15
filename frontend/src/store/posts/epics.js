@@ -17,10 +17,10 @@ export function fetchPost(action$) {
 export function fetchPosts(action$) {
   return action$.ofType(POST.POST_FETCH_COLLECTION)
     .map(action => action.payload)
-    .switchMap(params => {
+    .switchMap(payload => {
       return Observable.fromPromise(
-        instanceAxios.get(`/posts?${querystring.stringify(params)}`)
-      ).map(res => postsActions.fetchPostsSuccess(res.data))
+        instanceAxios.get(`/posts?${querystring.stringify(payload.params)}`)
+      ).map(res => postsActions.fetchPostsSuccess({data: res.data, p: payload}))
     })
 }
 

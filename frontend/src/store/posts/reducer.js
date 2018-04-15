@@ -15,18 +15,18 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case POST.POST_FETCH_ONE_SUCCESS:
     case POST.POST_FETCH_COLLECTION_SUCCESS:
-      newById = Object.assign({}, _(keyBy(action.payload[0], (post) => post.id))
+      newById = Object.assign({}, _(keyBy(action.payload.data[0], (post) => post.id))
         .map(function (v, k) {
           return _.merge({}, v, { key: k })
         })
         .value())
 
-      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+      newById = _.orderBy(newById, action.payload.p.props.sort.sortKey, action.payload.p.props.sort.sortOrder)
 
       return state.merge({
-        sort: state.sort || {},
-        params: action.payload.params || {},
-        category: state.category || '',
+        sort: action.payload.p.props.sort || {},
+        params: action.payload.p.params || {},
+        category: '',
         byId: newById || {}
       })
     case POST.POST_CREATE_SUCCESS:
@@ -121,7 +121,7 @@ export default (state = initialState, action) => {
 
       return state.merge({
         sort: action.payload.p.props.sort || {},
-        params: action.payload.p.props.params || {},
+        params: { q: '', field: '' },
         category: action.payload.p.category || '',
         byId: newById || {}
       })

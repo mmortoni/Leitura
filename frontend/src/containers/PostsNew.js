@@ -90,6 +90,7 @@ export class PostsNew extends React.Component {
             data-style="btn-info"
             id="selCategory"
             onChange={this.handleChange.bind(this, 'category')} >
+              <option value="0">Selecione uma categoria</option>
             {categories && Object.keys(categories).map((key) =>
               <option key={categories[key].id.toString()} value={categories[key].name}>{categories[key].path}</option>
             )

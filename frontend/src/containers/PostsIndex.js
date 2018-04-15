@@ -49,7 +49,7 @@ export class PostsIndex extends React.Component {
   }
 
   fetchPosts(params) {
-    this.context.store.dispatch(postsActions.fetchPosts(params))
+    this.context.store.dispatch(postsActions.fetchPosts({params: params, props: this.props}))
   }
 
   deletePost(item, buttonValue) {

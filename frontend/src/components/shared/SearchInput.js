@@ -27,13 +27,19 @@ export class SearchInput extends React.Component {
       });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    this.ref.value = nextProps.value || '';
+    let shouldUpdate = this.props.status !== nextProps.status;
+    return shouldUpdate;
+  }
+
   render() {
     return (
       <input
-        type="test"
+        type="text"
         className="form-control"
         ref={ref => this.ref = ref}
-        placeholder={this.props.placeholder} />
+        placeholder={this.props.placeholder}  />
     )
   }
 }

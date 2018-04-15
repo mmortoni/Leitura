@@ -1,10 +1,9 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-var objectId = require("node-time-uuid")
 
 const bodyParser = require('body-parser')
-
+const uuid = require('uuid')
 const categories = require('./categories')
 const posts = require('./posts')
 const comments = require('./comments')
@@ -163,13 +162,9 @@ app.get('/posts', (req, res) => {
 })
 
 app.post('/posts', bodyParser.json(), (req, res) => {
-    let id = new objectId()
-    let buffer = id.get().toString('base64')
-    let timestamp = Math.floor(Date.now())
-
     let post = {
-        id: buffer.toLowerCase(),
-        timestamp: timestamp,
+        id: uuid().split("-").join(""),
+        timestamp: Math.floor(Date.now()),
         title: req.body.title,
         body: req.body.body,
         author: req.body.author,
@@ -286,14 +281,10 @@ app.put('/comments/:id', bodyParser.json(), (req, res) => {
 })
 
 app.post('/comments', bodyParser.json(), (req, res) => {
-    let id = new objectId()
-    let buffer = id.get().toString('base64')
-    let timestamp = Math.floor(Date.now())
-
     let comment = {
-        id: buffer.toLowerCase(),
+        id: uuid().split("-").join(""),
         parentId: req.body.parentId,
-        timestamp: timestamp,
+        timestamp: Math.floor(Date.now()),
         body: req.body.body,
         author: req.body.author,
         voteScore: 0,

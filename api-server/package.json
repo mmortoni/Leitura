@@ -17,7 +17,7 @@
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
-    "node-time-uuid": "^0.1.5"
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,6 +29,6 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom" 
+    "test": "react-scripts test --env=jsdom"
   }
 }

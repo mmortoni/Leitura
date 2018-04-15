@@ -1,3 +1,4 @@
+import { LOCATION_CHANGE } from 'react-router-redux';
 import { keyBy } from 'lodash';
 import Immutable from 'seamless-immutable'
 
@@ -12,6 +13,8 @@ const initialState = Immutable({
 
 export default (state = initialState, action) => {
   let newById
+  //let location = state.locationBeforeTransitions
+
   switch (action.type) {
     case POST.POST_FETCH_ONE_SUCCESS:
     case POST.POST_FETCH_COLLECTION_SUCCESS:

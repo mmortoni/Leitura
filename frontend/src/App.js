@@ -9,7 +9,6 @@ import store from './store/index';
 import axios from 'axios';
 
 import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index';
-//import NotFound from './components/NotFound/NotFound';
 
 require('./app.scss');
 
@@ -62,15 +61,15 @@ export default () => {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={App}>
-          <IndexRoute component={PostsIndex} />
-          <Route path="/posts/new" component={PostsNew} />
-          <Route path="/posts/:postId/edit" component={PostsEdit} />
-          <Route path="/posts/:postId/comment" component={PostsComment} />
-          <Route path="/posts/:postId/comment/new" component={PostsCommentNew} />
-          <Route path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
+          <Route path="/" component={App}>
+            <IndexRoute component={PostsIndex} />
+            <Route path="/posts/new" component={PostsNew} />
+            <Route path="/posts/:postId/edit" component={PostsEdit} />
+            <Route path="/posts/:postId/comment" component={PostsComment} />
+            <Route path="/posts/:postId/comment/new" component={PostsCommentNew} />
+            <Route path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
+          </Route>
           <Route path='*' component={NotFound} status={404} />
-        </Route>
       </Router>
     </Provider>
   )

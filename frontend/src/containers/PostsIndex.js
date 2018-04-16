@@ -78,10 +78,15 @@ export class PostsIndex extends React.Component {
       p = { q: value.trim(), field: field }
 
     this.fetchPosts(p)
+    browserHistory.push('/');
   }
 
   onCategoryChange(value) {
     this.context.store.dispatch(postsActions.categoryPosts({ category: value, props: this.props }))
+    if (value == '0')
+      value=''
+
+    browserHistory.push(`/${value}`);
   }
 
   onSortingChange(value) {

@@ -63,9 +63,10 @@ export default () => {
       <Router history={history}>
           <Route path="/" component={App}>
             <IndexRoute component={PostsIndex} />
+            <Route path="/:category" component={PostsIndex} />
             <Route path="/posts/new" component={PostsNew} />
             <Route path="/posts/:postId/edit" component={PostsEdit} />
-            <Route path="/posts/:postId/comment" component={PostsComment} />
+            <Route path="/:category/:postId" component={PostsComment} />
             <Route path="/posts/:postId/comment/new" component={PostsCommentNew} />
             <Route path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
           </Route>
@@ -74,3 +75,13 @@ export default () => {
     </Provider>
   )
 }
+/*
+http://localhost:3001/redux
+http://localhost:3001/react
+http://localhost:3001/udacity
+
+
+http://localhost:3001/redux/6ni6ok3ym7mf1p33lnez
+http://localhost:3001/react/6ni6ok3ym7mf1p33lnez
+http://localhost:3001/udacity/6ni6ok3ym7mf1p33lnez
+*/

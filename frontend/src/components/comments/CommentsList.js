@@ -11,7 +11,7 @@ const CommentsList = ({ comments, onDelete, onVoteComment }) => {
         </tr>
       </thead>
       <tbody>
-        {comments.map(comment => CommentsListRow({ comment, onDelete, onVoteComment }))}
+        {comments && comments.map(comment => CommentsListRow({ comment, onDelete, onVoteComment }))}
       </tbody>
     </table>
   )

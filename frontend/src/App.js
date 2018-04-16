@@ -75,13 +75,3 @@ export default () => {
     </Provider>
   )
 }
-/*
-http://localhost:3001/redux
-http://localhost:3001/react
-http://localhost:3001/udacity
-
-
-http://localhost:3001/redux/6ni6ok3ym7mf1p33lnez
-http://localhost:3001/react/6ni6ok3ym7mf1p33lnez
-http://localhost:3001/udacity/6ni6ok3ym7mf1p33lnez
-*/

@@ -48,6 +48,11 @@ export class PostsComment extends React.Component {
     this.context.store.dispatch(commentsActions.fetchComments(this.props.post))
   }
 
+  componentWillReceiveProps() {
+    if(!this.props.post)
+      browserHistory.push('/');
+  }
+
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')
       this.context.store.dispatch(commentsActions.deleteComment(item))

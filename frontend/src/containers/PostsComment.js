@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Modal, ModalManager, Effect } from 'react-dynamic-modal'
+import _ from 'lodash';
 import { CommentsList } from '../components/comments/CommentsList'
 import { postsActions, postsSelectors } from '../store/posts/index'
 import { commentsActions, commentsSelectors } from '../store/comments/index'
@@ -36,7 +37,10 @@ export class PostsComment extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    document.getElementById('navItemComments').parentNode.classList.remove('disabled')
+    
+  
+    if(!_.isEmpty(props.post))
+      document.getElementById('navItemComments').parentNode.classList.remove('disabled')
 
     this.deleteComment = this.deleteComment.bind(this)
     this.deleteCommentModal = this.deleteCommentModal.bind(this)
@@ -48,11 +52,18 @@ export class PostsComment extends React.Component {
     this.context.store.dispatch(commentsActions.fetchComments(this.props.post))
   }
 
+  componentWillMount() {
+    if(_.isEmpty(this.props.post)) {
+      browserHistory.push(this.props.location.pathname)
+      return
+    }
+  }
+/*
   componentWillReceiveProps() {
     if(!this.props.post)
       browserHistory.push('/');
   }
-
+*/
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')
       this.context.store.dispatch(commentsActions.deleteComment(item))

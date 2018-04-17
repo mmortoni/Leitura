@@ -11,7 +11,7 @@ export function getSort(state) {
 }
 
 export function getPost(state, id) {
- // if(state.posts.byId.length  === undefined) return null
+  if(state.posts.byId.length  === undefined) return {}
   
   return state.posts.byId.find(post => post.id === id);
 }

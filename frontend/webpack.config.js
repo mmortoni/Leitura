@@ -11,6 +11,7 @@ module.exports = function makeWebpackConfig() {
 
   config.output = {
     path: __dirname + '/dist/',
+    publicPath: '/',
     filename: 'bundle.js'
   };
 

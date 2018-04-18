@@ -1,20 +1,20 @@
-import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
-import { Route, IndexRoute, Router, hashHistory, browserHistory } from 'react-router';
+import React from 'react'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap'
+import { Route, IndexRoute, Router, hashHistory, browserHistory } from 'react-router'
 import Switch from 'react-router-dom/Switch'
-import { syncHistoryWithStore } from 'react-router-redux';
-import { Provider } from 'react-redux';
-import store from './store/index';
-import axios from 'axios';
+import { syncHistoryWithStore } from 'react-router-redux'
+import { Provider } from 'react-redux'
+import store from './store/index'
+import axios from 'axios'
 
-import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index';
+import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index'
 
-require('./app.scss');
+require('./app.scss')
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-let token = localStorage.token;
+let token = localStorage.token
 
 if (!token)
   token = localStorage.token = Math.random()

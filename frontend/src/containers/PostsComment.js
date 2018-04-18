@@ -48,8 +48,7 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    const post = {id: this.props.routeParams.postId}
-    this.context.store.dispatch(commentsActions.fetchComments( post ))
+    this.context.store.dispatch(commentsActions.fetchComments( {id: this.props.routeParams.postId} ))
   }
 
   componentWillMount() {
@@ -59,7 +58,7 @@ export class PostsComment extends React.Component {
       return
     }
   }
-  
+
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')
       this.context.store.dispatch(commentsActions.deleteComment(item))

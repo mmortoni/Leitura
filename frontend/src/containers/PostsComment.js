@@ -37,7 +37,6 @@ export class PostsComment extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    
   
     if(!_.isEmpty(props.post))
       document.getElementById('navItemComments').parentNode.classList.remove('disabled')
@@ -49,7 +48,8 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    this.context.store.dispatch(commentsActions.fetchComments(this.props.post))
+    const post = {id: this.props.routeParams.postId}
+    this.context.store.dispatch(commentsActions.fetchComments( post ))
   }
 
   componentWillMount() {
@@ -59,12 +59,7 @@ export class PostsComment extends React.Component {
       return
     }
   }
-/*
-  componentWillReceiveProps() {
-    if(!this.props.post)
-      browserHistory.push('/');
-  }
-*/
+  
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')
       this.context.store.dispatch(commentsActions.deleteComment(item))

@@ -7,7 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import store from './store/index'
 import axios from 'axios'
-
+import NotFound from './components/NotFound/NotFound'
 import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index'
 
 require('./app.scss')
@@ -51,26 +51,22 @@ let App = ({ children }) => {
   );
 }
 
-const NotFound = React.createClass({
-  render() {
-    return (<div>Page Not Found</div>)
-  }
-})
-
 export default () => {
   return (
     <Provider store={store}>
       <Router history={history}>
-          <Route path="/" component={App}>
+        <Switch>
+          <Route path="/notFound" component={NotFound} />
+          <Route exact path="/" component={App}>
             <IndexRoute component={PostsIndex} />
-            <Route path="/:category" component={PostsIndex} />
-            <Route path="/posts/new" component={PostsNew} />
-            <Route path="/posts/:postId/edit" component={PostsEdit} />
-            <Route path="/:category/:postId" component={PostsComment} />
-            <Route path="/posts/:postId/comment/new" component={PostsCommentNew} />
-            <Route path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
+            <Route exact path="/:category" component={PostsIndex} />
+            <Route exact path="/posts/new" component={PostsNew} />
+            <Route exact path="/posts/:postId/edit" component={PostsEdit} />
+            <Route exact path="/:category/:postId" component={PostsComment} />
+            <Route exact path="/posts/:postId/comment/new" component={PostsCommentNew} />
+            <Route exact path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
           </Route>
-          <Route path='*' component={NotFound} status={404} />
+          </Switch>
       </Router>
     </Provider>
   )

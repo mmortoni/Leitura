@@ -1,5 +1,4 @@
 const supertest = require('supertest');
-var objectId = require("node-time-uuid");
 
 const api = require('../../readableAPI');
 const readableAPI = supertest.agent(api);
@@ -95,7 +94,7 @@ describe('Testes Udacity Readable API', () => {
         .set(headers)
         .expect(200)
         .then(res => {
-            expect(res.body.id).toEqual('8xf0y6ziyjabvozdd253nds');
+            expect(res.body[0][0].id).toEqual('8xf0y6ziyjabvozdd253nds');
             done();
         })
     });

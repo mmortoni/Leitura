@@ -76,11 +76,17 @@ function getByCategory(token, category) {
 function get(token, id) {
   return new Promise((res) => {
     const posts = getData(token)
-    res(
-      posts.byId[id].deleted
-        ? {}
-        : posts.byId[id]
-    )
+    let result = []
+
+    if(posts.byId[id].deleted) {
+      result[0] = [{}]
+      result[1] = [{}]
+    } else {
+      result[0] = [posts.byId[id]]
+      result[1] = [id]
+    }
+
+    res(result)
   })
 }
 

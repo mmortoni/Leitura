@@ -7,11 +7,11 @@ import * as postsActions from './actionCreators';
 export function fetchPost(action$) {
   return action$.ofType(POST.POST_FETCH_ONE)
     .map(action => action.payload)
-    .switchMap(id => {
+    .switchMap(payload => {
       return Observable.fromPromise(
-        instanceAxios.get(`/posts/${id}`)
-      ).map(res => postsActions.fetchPostSuccess(res.data));
-    });
+        instanceAxios.get(`/posts/${payload.id}`)
+      ).map(res => postsActions.fetchPostSuccess({data: res.data, p: payload}))
+    })
 }
 
 export function fetchPosts(action$) {

@@ -48,17 +48,16 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-//    if(_.isEmpty(this.props.post)) {
-//      browserHistory.push('/notFound')
-//      return
-//    }
+    if(_.isEmpty(this.props.post)) {
+      //browserHistory.push('/notFound')
+      //return
+    }
     this.context.store.dispatch(commentsActions.fetchComments( {id: this.props.routeParams.postId} ))
   }
 
   componentWillMount() {
     if(_.isEmpty(this.props.post)) {
-      // pega o post unico
-      this.context.store.dispatch(postsActions.fetchPosts({params: {}, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } }}))
+      this.context.store.dispatch(postsActions.fetchPost({id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } }} ))
       browserHistory.push(this.props.location.pathname)
       return
     }

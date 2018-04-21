@@ -31,6 +31,16 @@ window.instanceAxios = axios.create({
   }
 })
 
+// Add a response interceptor
+window.instanceAxios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Do something with response error
+  browserHistory.push('/notFound')
+  return Promise.reject(error);
+});
+
 let App = ({ children }) => {
   return (
     <div>

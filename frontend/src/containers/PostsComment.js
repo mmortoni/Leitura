@@ -37,8 +37,8 @@ export class PostsComment extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-  
-    if(!_.isEmpty(props.post))
+
+    if (!_.isEmpty(props.post))
       document.getElementById('navItemComments').parentNode.classList.remove('disabled')
 
     this.deleteComment = this.deleteComment.bind(this)
@@ -48,20 +48,28 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.post)) {
-      //browserHistory.push('/notFound')
-      //return
+    if (!_.isEmpty(this.props.post)) {
+      this.context.store.dispatch(commentsActions.fetchComments({ id: this.props.routeParams.postId }))
     }
-    this.context.store.dispatch(commentsActions.fetchComments( {id: this.props.routeParams.postId} ))
   }
 
   componentWillMount() {
-    if(_.isEmpty(this.props.post)) {
-      this.context.store.dispatch(postsActions.fetchPost({id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } }} ))
+    if (_.isEmpty(this.props.post)) {
+      this.context.store.dispatch(postsActions.fetchPost({ id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } } }))
       browserHistory.push(this.props.location.pathname)
       return
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+
+    if (_.isEmpty(this.props.post)) {
+      browserHistory.push('/notFound')
+      return null
+    }
+  }
+
 
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')

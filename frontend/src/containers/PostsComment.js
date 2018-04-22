@@ -48,9 +48,7 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    if (!_.isEmpty(this.props.post)) {
-      this.context.store.dispatch(commentsActions.fetchComments({ id: this.props.routeParams.postId }))
-    }
+    this.context.store.dispatch(commentsActions.fetchComments({ id: this.props.routeParams.postId }))
   }
 
   componentWillMount() {
@@ -60,16 +58,6 @@ export class PostsComment extends React.Component {
       return
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-
-    if (_.isEmpty(this.props.post)) {
-      browserHistory.push('/notFound')
-      return null
-    }
-  }
-
 
   deleteComment(item, buttonValue) {
     if (buttonValue === 'ok')

@@ -10,7 +10,7 @@ export function fetchPost(action$) {
     .switchMap(payload => {
       return Observable.fromPromise(
         instanceAxios.get(`/posts/${payload.id}`)
-      ).map(res => postsActions.fetchPostSuccess({data:res.data, p: payload}))
+      ).map(res => postsActions.fetchPostSuccess({data: (res) ? res.data : {}, p: payload}))
     })
 }
 

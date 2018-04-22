@@ -13,18 +13,19 @@ const initialState = Immutable({
 
 export default (state = initialState, action) => {
   let newById
-  //let location = state.locationBeforeTransitions
 
   switch (action.type) {
     case POST.POST_FETCH_ONE_SUCCESS:
     case POST.POST_FETCH_COLLECTION_SUCCESS:
-      newById = Object.assign({}, _(keyBy(action.payload.data[0], (post) => post.id))
-        .map(function (v, k) {
-          return _.merge({}, v, { key: k })
-        })
-        .value())
+      if (action.payload.data) {
+        newById = Object.assign({}, _(keyBy(action.payload.data[0], (post) => post.id))
+          .map(function (v, k) {
+            return _.merge({}, v, { key: k })
+          })
+          .value())
 
-      newById = _.orderBy(newById, action.payload.p.props.sort.sortKey, action.payload.p.props.sort.sortOrder)
+        newById = _.orderBy(newById, action.payload.p.props.sort.sortKey, action.payload.p.props.sort.sortOrder)
+      }
 
       return state.merge({
         sort: action.payload.p.props.sort || {},
@@ -115,10 +116,10 @@ export default (state = initialState, action) => {
       })
     case POST.POST_CATEGORY_SUCESS:
       newById = Object.assign({}, _(keyBy(action.payload.data[0], (post) => post.id))
-      .map(function (v, k) {
-        return _.merge({}, v, { key: k })
-      })
-      .value())
+        .map(function (v, k) {
+          return _.merge({}, v, { key: k })
+        })
+        .value())
 
       newById = _.orderBy(newById, action.payload.p.props.sort.sortKey, action.payload.p.props.sort.sortOrder)
 

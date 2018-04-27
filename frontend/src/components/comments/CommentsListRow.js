@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { formatTimestamp } from '../../utils/Utils'
 
-const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
+const CommentsListRow = ({ comment, category, onDelete, onVoteComment }) => {
   if (!comment) {
     return <tr><td><div>404 Comment Not Found!</div></td></tr>
   }
@@ -31,7 +31,7 @@ const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
       </td>
       <td>
         <div className="btn-toolbar pull-right">
-          <Link to={`/posts/comment/${comment.id}/edit`} className="btn btn-primary btn-line">
+          <Link to={`/${category}/comment/${comment.id}/edit`} className="btn btn-primary btn-line">
             <span className="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <span><strong>Edit</strong></span>
           </Link>

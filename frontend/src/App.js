@@ -71,8 +71,8 @@ export default () => {
             <Route exact path="/posts/new" component={PostsNew} />
             <Route exact path="/posts/:postId/edit" component={PostsEdit} />
             <Route exact path="/:category/:postId" component={PostsComment} />
-            <Route exact path="/posts/:postId/comment/new" component={PostsCommentNew} />
-            <Route exact path="/posts/comment/:commentId/edit" component={PostsCommentEdit} />
+            <Route exact path="/:category/:postId/comment/new" component={PostsCommentNew} />
+            <Route exact path="/:category/comment/:commentId/edit" component={PostsCommentEdit} />
           </Route>
           </Switch>
       </Router>

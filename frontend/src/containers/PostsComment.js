@@ -113,11 +113,11 @@ export class PostsComment extends React.Component {
               </div>
             </div>
 
-            {comments.length > 0 && <CommentsList comments={comments} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment} />}
+            {comments.length > 0 && <CommentsList comments={comments} category={post.category} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment} />}
           </div>
 
           <div className="col-md-2 text-right">
-            <Link to={`/posts/${post.id}/comment/new`} className="btn btn-primary a-btn-slide-text">
+            <Link to={`/${post.category}/${post.id}/comment/new`} className="btn btn-primary a-btn-slide-text">
               <span style={{ class: this.classNames }} aria-hidden="true"></span>
               <span><strong>Novo Comment</strong></span>
             </Link>

@@ -26,13 +26,16 @@ export class PostsCommentEdit extends React.Component {
   };
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     this.state = {
       ...this.state,
       commentId: this.props.params.commentId,
       comment: this.props.comment
-    };
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,7 +52,7 @@ export class PostsCommentEdit extends React.Component {
   handleSubmit() {
     if (this.state.commentId) {
       this.context.store.dispatch(commentsActions.updateComment(this.state.comment));
-      browserHistory.push(`/posts/${this.state.comment.parentId}/comment`);
+      browserHistory.push(`/${this.props.params.category}/${this.state.comment.parentId}`);
     }
   }
 

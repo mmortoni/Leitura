@@ -24,22 +24,24 @@ export class PostsCommentNew extends React.Component {
       postId: this.props.params.postId,
       comment: { author: '', body: '' }
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.post, this.state.comment)) {
-      this.setState({ ...this.state, post: nextProps.post });
+      this.setState({ ...this.state, post: nextProps.post })
     }
   }
 
   handleChange(field, e) {
-    const comment = Object.assign({}, this.state.comment, { [field]: e.target.value });
-    this.setState(Object.assign({}, this.state, { comment }));
+    const comment = Object.assign({}, this.state.comment, { [field]: e.target.value })
+    this.setState(Object.assign({}, this.state, { comment }))
   }
 
   handleSubmit() {
-    this.context.store.dispatch(commentsActions.createComment(this.state));
-    browserHistory.push(`/posts/${this.state.postId}/comment`);
+    this.context.store.dispatch(commentsActions.createComment(this.state))
+    browserHistory.push(`/${this.props.params.category}/${this.state.postId}`)
   }
 
   render() {

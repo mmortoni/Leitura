@@ -44,8 +44,11 @@ export class PostsIndex extends React.Component {
 
   componentDidMount() {
     document.getElementById('navItemComments').parentNode.classList.add('disabled')
-
-    this.fetchPosts({})
+    if(this.props.routeParams.category) {
+      this.context.store.dispatch(postsActions.categoryPosts({ category: this.props.routeParams.category.toLowerCase(), props: this.props }))
+    } else {
+      this.fetchPosts({})
+    }
   }
 
   fetchPosts(params) {

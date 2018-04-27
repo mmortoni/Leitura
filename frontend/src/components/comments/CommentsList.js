@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { CommentsListRow } from './CommentsListRow';
 
-const CommentsList = ({ comments, onDelete, onVoteComment }) => {
+const CommentsList = ({ comments, category, onDelete, onVoteComment }) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -11,7 +11,7 @@ const CommentsList = ({ comments, onDelete, onVoteComment }) => {
         </tr>
       </thead>
       <tbody>
-        {comments && comments.map(comment => CommentsListRow({ comment, onDelete, onVoteComment }))}
+        {comments && comments.map(comment => CommentsListRow({ comment, category, onDelete, onVoteComment }))}
       </tbody>
     </table>
   )

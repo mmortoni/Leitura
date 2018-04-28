@@ -35,9 +35,17 @@ window.instanceAxios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   console.log(error.response)
-  Promise.reject(error)
   return browserHistory.push('/notFound')
 })
+
+browserHistory.listen(location => {
+  let notFound = location.hash ? true : false
+
+  if (notFound) {
+    browserHistory.push('/notFound')
+    return
+  }
+});
 
 let App = ({ children }) => {
   return (
@@ -63,18 +71,20 @@ export default () => {
   return (
     <Provider store={store}>
       <Router history={history}>
+        <Route path="/notFound" component={NotFound} />
+
         <Switch>
-          <Route path="/notFound" component={NotFound} />
           <Route exact path="/" component={App}>
             <IndexRoute component={PostsIndex} />
-            <Route exact path="/:category" component={PostsIndex} />
-            <Route exact path="/posts/new" component={PostsNew} />
-            <Route exact path="/posts/:postId/edit" component={PostsEdit} />
-            <Route exact path="/:category/:postId" component={PostsComment} />
-            <Route exact path="/:category/:postId/comment/new" component={PostsCommentNew} />
-            <Route exact path="/:category/comment/:commentId/edit" component={PostsCommentEdit} />
+            <Route path="posts/new" component={PostsNew} />
+            <Route path="posts/:postId/edit" component={PostsEdit} />
+            <Route path=":category" component={PostsIndex} />
+            <Route path=":category/:postId" component={PostsComment} />
+            <Route path=":category/:postId/comment/new" component={PostsCommentNew} />
+            <Route path=":category/comment/:commentId/edit" component={PostsCommentEdit} />
           </Route>
-          </Switch>
+        </Switch>
+
       </Router>
     </Provider>
   )

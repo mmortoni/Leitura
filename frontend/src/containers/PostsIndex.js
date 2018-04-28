@@ -44,15 +44,23 @@ export class PostsIndex extends React.Component {
 
   componentDidMount() {
     document.getElementById('navItemComments').parentNode.classList.add('disabled')
-    if(this.props.routeParams.category) {
-      this.context.store.dispatch(postsActions.categoryPosts({ category: this.props.routeParams.category.toLowerCase(), props: this.props }))
+
+    if (this.props.routeParams.category) {
+      let category = this.props.routeParams.category.toLowerCase()
+      
+      if(['react', 'redux', 'udacity'].indexOf(category) == -1) {
+        browserHistory.push('/notFound')
+        return
+      } else {
+        this.context.store.dispatch(postsActions.categoryPosts({ category: category, props: this.props }))
+      }
     } else {
       this.fetchPosts({})
     }
   }
 
   fetchPosts(params) {
-    this.context.store.dispatch(postsActions.fetchPosts({params: params, props: this.props}))
+    this.context.store.dispatch(postsActions.fetchPosts({ params: params, props: this.props }))
   }
 
   deletePost(item, buttonValue) {
@@ -87,9 +95,9 @@ export class PostsIndex extends React.Component {
   onCategoryChange(value) {
     this.context.store.dispatch(postsActions.categoryPosts({ category: value, props: this.props }))
     if (value == '0')
-      value=''
+      value = ''
 
-    browserHistory.push(`/${value}`);
+    browserHistory.push(`/${value}`)
   }
 
   onSortingChange(value) {
@@ -136,10 +144,10 @@ export class PostsIndex extends React.Component {
             <select value={category}
               onChange={e => this.onCategoryChange(e.target.value)}
             >
-            <option value="0">Selecione uma categoria</option>
-            <option value="react">React</option>
-            <option value="redux">Redux</option>
-            <option value="udacity">Udacity</option>
+              <option value="0">Selecione uma categoria</option>
+              <option value="react">React</option>
+              <option value="redux">Redux</option>
+              <option value="udacity">Udacity</option>
             </select>
           </div>
 
@@ -155,7 +163,7 @@ export class PostsIndex extends React.Component {
               <option value="voteScore">Like</option>
               <option value="timestamp">Data</option>
             </select>&nbsp;
-                       
+
             <div className="btn-group btn-toggle vcenter">
               <button className="btn btn-md btn-default active" value="ASC" onClick={e => this.handleClick(e)}>
                 <span ref="refSpan" className="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>

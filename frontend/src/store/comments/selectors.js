@@ -7,6 +7,8 @@ export function getSort(state) {
 }
 
 export function getComment(state, id) {
+  if(state.comments.byId.length  === undefined) return {}
+
   return state.comments.byId.find(comment => comment.id === id);
 }
 

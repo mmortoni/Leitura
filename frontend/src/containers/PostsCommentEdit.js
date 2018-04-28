@@ -38,6 +38,13 @@ export class PostsCommentEdit extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    if(_.isEmpty(this.props.comment)) {
+        browserHistory.push('/notFound')
+        return
+      }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.post, this.state.comment)) {
       this.setState({ ...this.state, post: nextProps.comment });

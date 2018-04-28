@@ -3,8 +3,17 @@ import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { commentsActions, commentsSelectors } from '../store/comments/index';
+import { postsSelectors } from '../store/posts/index';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import { isEqual, isEmpty } from 'lodash';
+
+@connect(
+  (state, props) => {
+    return {
+      post: postsSelectors.getPost(state, props.params.postId),
+    };
+  }
+)
 
 export class PostsCommentNew extends React.Component {
   static contextTypes = {
@@ -26,6 +35,13 @@ export class PostsCommentNew extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    if(_.isEmpty(this.props.post)) {
+        browserHistory.push('/notFound')
+        return
+      }
   }
 
   componentWillReceiveProps(nextProps) {

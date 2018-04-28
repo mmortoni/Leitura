@@ -18,7 +18,6 @@ export function fetchComments(action$) {
   return action$.ofType(COMMENT.COMMENT_FETCH_COLLECTION)
     .map(action => action.payload)
     .switchMap(post => {
-      console.log(post.id)
       return Observable.fromPromise(
         instanceAxios.get(`/posts/${post.id}/comments`)
       ).map(res => commentsActions.fetchCommentsSuccess(res.data))

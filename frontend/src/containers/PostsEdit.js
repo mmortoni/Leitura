@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { postsActions, postsSelectors } from '../store/posts/index';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import { isEqual, isEmpty } from 'lodash';
 
 @connect(
   (state, props) => {
@@ -33,6 +33,13 @@ export class PostsEdit extends React.Component {
       postId: this.props.params.postId,
       post: this.props.post
     };
+  }
+
+  componentDidMount() {
+    if(_.isEmpty(this.props.post)) {
+        browserHistory.push('/notFound')
+        return
+      }
   }
 
   componentWillReceiveProps(nextProps) {

@@ -57,7 +57,7 @@ export class PostsNew extends React.Component {
   }
 
   render() {
-    let { title, author, category, body } = this.state.post
+    const { title, author, category, body } = this.state.post
 
     let categories
     if (this.props.categories) {

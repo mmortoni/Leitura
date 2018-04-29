@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Modal, ModalManager, Effect } from 'react-dynamic-modal'
 import _ from 'lodash';
+import { PostsListRow } from '../components/posts/PostsListRow';
+
 import { CommentsList } from '../components/comments/CommentsList'
 import { postsActions, postsSelectors } from '../store/posts/index'
 import { commentsActions, commentsSelectors } from '../store/comments/index'
@@ -32,22 +34,33 @@ export class PostsComment extends React.Component {
 
   static propTypes = {
     params: PropTypes.object,
-    post: PropTypes.object,
+    post: PropTypes.object
   };
 
   constructor(props, context) {
     super(props, context)
 
-    if (!_.isEmpty(props.post))
+    if (!_.isEmpty(props.post)) {
       document.getElementById('navItemComments').parentNode.classList.remove('disabled')
+    }
+
+    pathCallback = this.props.location.pathname
+
+    this.deletePost = this.deletePost.bind(this)
+    this.deletePostModal = this.deletePostModal.bind(this)
+    this.votePost = this.votePost.bind(this)
 
     this.deleteComment = this.deleteComment.bind(this)
     this.deleteCommentModal = this.deleteCommentModal.bind(this)
     this.voteComment = this.voteComment.bind(this)
-    this.votePost = this.votePost.bind(this)
   }
 
   componentDidMount() {
+    if(_.isEmpty(this.props.post)) {
+      browserHistory.push('/notFound')
+      return
+    }
+    
     this.context.store.dispatch(commentsActions.fetchComments({ id: this.props.routeParams.postId }))
   }
 
@@ -57,6 +70,27 @@ export class PostsComment extends React.Component {
       browserHistory.push(this.props.location.pathname)
       return
     }
+  }
+
+  deletePost(item, buttonValue) {
+    if (buttonValue === 'ok') {
+      this.context.store.dispatch(postsActions.deletePost(item))
+      browserHistory.push('/')
+    }
+  }
+
+  deletePostModal(post) {
+    ModalManager.open(<AppModal
+      title={'Delete Post'}
+      content={'Tem certeza de que deseja excluir?'}
+      detail={post.title}
+      callBackFunction={this.deletePost}
+      item={post}
+      effect={EFFECTS['3D ROTATE LEFT']} />);
+  }
+
+  votePost(id, option) {
+    this.context.store.dispatch(postsActions.votePost({ id: id, option: option }))
   }
 
   deleteComment(item, buttonValue) {
@@ -78,10 +112,6 @@ export class PostsComment extends React.Component {
     this.context.store.dispatch(commentsActions.voteComment({ id: id, option: option }))
   }
 
-  votePost(id, option) {
-    this.context.store.dispatch(postsActions.votePost({ id: id, option: option }))
-  }
-
   render() {
     const { comments, post } = this.props
 
@@ -93,23 +123,7 @@ export class PostsComment extends React.Component {
           <div className="col-md-10">
             <div className="post">
               <div className="post-description">
-                <div className="post-title"><h3>{post.title}</h3></div>
-                <div className="post-body"><p>{post.body}</p></div>
-                <div className="post-likes">
-                  <img src="/images/thumbs-up.png" width="28" height="28" onClick={this.votePost.bind(this, post.id, "upVote")} />
-                  <img src="/images/thumbs-down.png" width="28" height="28" onClick={this.votePost.bind(this, post.id, "downVote")} />
-                </div>
-                <div className="post-likes-comments">
-                  {post.voteScore} votes {comments && comments.length > 0 ? comments.length : 0} comments
-                </div>
-              </div>
-
-              <br />
-
-              <div>
-                <div className="post-author"><p><b>Category: </b> {post.category}</p></div>
-                <div className="post-author"><p><b>Author: </b> {post.author}</p></div>
-                <div className="post-author"><p><b>Time: </b> {formatTimestamp(post.timestamp)}</p></div>
+                {<PostsListRow post={post} onDelete={this.deletePostModal} onVotePost={this.votePost} />}
               </div>
             </div>
 

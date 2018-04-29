@@ -56,12 +56,12 @@ export class PostsEdit extends React.Component {
   handleSubmit() {
     if (this.state.postId) {
       this.context.store.dispatch(postsActions.updatePost(this.state.post));
-      browserHistory.push('/');
+      browserHistory.push(pathCallback);
     }
   }
 
   render() {
-    let { title, body } = this.state.post
+    const { title, body } = this.state.post
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)} noValidate>

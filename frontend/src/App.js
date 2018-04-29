@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap'
-import { Route, IndexRoute, Router, hashHistory, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 import Switch from 'react-router-dom/Switch'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
@@ -38,8 +38,10 @@ window.instanceAxios.interceptors.response.use(function (response) {
   return browserHistory.push('/notFound')
 })
 
+window.pathCallback='/'
+
 browserHistory.listen(location => {
-  let notFound = location.hash ? true : false
+  const notFound = location.hash ? true : false
 
   if (notFound) {
     browserHistory.push('/notFound')
@@ -47,7 +49,7 @@ browserHistory.listen(location => {
   }
 });
 
-let App = ({ children }) => {
+const App = ({ children }) => {
   return (
     <div>
       <Navbar>
@@ -82,6 +84,7 @@ export default () => {
             <Route path=":category/:postId" component={PostsComment} />
             <Route path=":category/:postId/comment/new" component={PostsCommentNew} />
             <Route path=":category/comment/:commentId/edit" component={PostsCommentEdit} />
+            <Route component={NotFound} />
           </Route>
         </Switch>
 

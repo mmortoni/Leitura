@@ -31,6 +31,8 @@ export class PostsIndex extends React.Component {
   constructor(props, context) {
     super(props, context)
 
+    pathCallback='/'
+
     this.sortParams = { sortDesc: props.sort.sortDesc, sortKey: props.sort.sortKey, sortOrder: [] }
     this.classNames = 'glyphicon glyphicon-sort-by-alphabet'
     this.deletePost = this.deletePost.bind(this)

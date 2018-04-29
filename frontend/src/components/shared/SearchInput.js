@@ -29,7 +29,7 @@ export class SearchInput extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     this.ref.value = nextProps.value || '';
-    let shouldUpdate = this.props.status !== nextProps.status;
+    const shouldUpdate = this.props.status !== nextProps.status;
     return shouldUpdate;
   }
 

@@ -11,6 +11,7 @@ const initialState = Immutable({
 
 export default (state = initialState, action) => {
   let newById
+  
   switch (action.type) {
     case COMMENT.COMMENT_FETCH_ONE_SUCCESS:
     case COMMENT.COMMENT_FETCH_COLLECTION_SUCCESS:

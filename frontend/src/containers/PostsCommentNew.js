@@ -61,7 +61,7 @@ export class PostsCommentNew extends React.Component {
   }
 
   render() {
-    let { author, body } = this.state.comment
+    const { author, body } = this.state.comment
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)} noValidate>

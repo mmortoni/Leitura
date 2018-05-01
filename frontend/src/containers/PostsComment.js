@@ -49,19 +49,21 @@ export class PostsComment extends React.Component {
     this.deletePost = this.deletePost.bind(this)
     this.deletePostModal = this.deletePostModal.bind(this)
     this.votePost = this.votePost.bind(this)
-
+    this.sleep - this.sleep.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.deleteCommentModal = this.deleteCommentModal.bind(this)
     this.voteComment = this.voteComment.bind(this)
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.post)) {
-      browserHistory.push('/notFound')
-      return
-    }
-    
     this.context.store.dispatch(commentsActions.fetchComments({ id: this.props.routeParams.postId }))
+
+    setTimeout(() => {
+      if (_.isEmpty(this.props.post)) {
+        browserHistory.push('/notFound')
+        return
+      }
+    }, 1000)
   }
 
   componentWillMount() {
@@ -114,19 +116,22 @@ export class PostsComment extends React.Component {
 
   render() {
     const { comments, post } = this.props
-
-    return (
-      <div>
+    
+    if (post) {
+      return (
         <div className="row">
-          <div className="col-md-4 col-md-offset-4"><h4>POST</h4></div>
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th colSpan={2}>POSTS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {<PostsListRow post={post} onDelete={this.deletePostModal} onVotePost={this.votePost} />}
+            </tbody>
+          </table>
 
           <div className="col-md-10">
-            <div className="post">
-              <div className="post-description">
-                {<PostsListRow post={post} onDelete={this.deletePostModal} onVotePost={this.votePost} />}
-              </div>
-            </div>
-
             {comments.length > 0 && <CommentsList comments={comments} category={post.category} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment} />}
           </div>
 
@@ -137,7 +142,9 @@ export class PostsComment extends React.Component {
             </Link>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (<div></div>)
+    }
   }
 }

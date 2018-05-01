@@ -10,7 +10,7 @@ export function fetchPost(action$) {
     .switchMap(payload => {
       return Observable.fromPromise(
         instanceAxios.get(`/posts/${payload.id}`)
-      ).map(res => postsActions.fetchPostSuccess({data: (res) ? res.data : {}, p: payload}))
+      ).map(res => postsActions.fetchPostSuccess({ data: (res) ? res.data : {}, p: payload }))
     })
 }
 
@@ -20,7 +20,7 @@ export function fetchPosts(action$) {
     .switchMap(payload => {
       return Observable.fromPromise(
         instanceAxios.get(`/posts?${querystring.stringify(payload.params)}`)
-      ).map(res => postsActions.fetchPostsSuccess({data: res.data, p: payload}))
+      ).map(res => postsActions.fetchPostsSuccess({ data: res.data, p: payload }))
     })
 }
 
@@ -82,7 +82,7 @@ export function categoryPosts(action$) {
       return Observable.merge(
         Observable.fromPromise(
           instanceAxios.get(`/${payload.category}/posts`)
-        ).map(res => postsActions.categorySuccess({data: res.data, p: payload}))
+        ).map(res => postsActions.categorySuccess({ data: res.data, p: payload }))
       );
     });
 }

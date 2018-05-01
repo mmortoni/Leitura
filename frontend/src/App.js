@@ -8,7 +8,15 @@ import { Provider } from 'react-redux'
 import store from './store/index'
 import axios from 'axios'
 import NotFound from './components/NotFound/NotFound'
-import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index'
+
+import {
+  PostsIndex,
+  PostsEdit,
+  PostsNew,
+  PostsComment,
+  PostsCommentEdit,
+  PostsCommentNew
+} from './containers/index'
 
 require('./app.scss')
 
@@ -38,12 +46,10 @@ window.instanceAxios.interceptors.response.use(function (response) {
   return browserHistory.push('/notFound')
 })
 
-window.pathCallback='/'
+window.pathCallback = '/'
 
 browserHistory.listen(location => {
-  const notFound = location.hash ? true : false
-
-  if (notFound) {
+  if (location.hash) {
     browserHistory.push('/notFound')
     return
   }
@@ -74,20 +80,16 @@ export default () => {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/notFound" component={NotFound} />
-
-        <Switch>
-          <Route exact path="/" component={App}>
-            <IndexRoute component={PostsIndex} />
-            <Route path="posts/new" component={PostsNew} />
-            <Route path="posts/:postId/edit" component={PostsEdit} />
-            <Route path=":category" component={PostsIndex} />
-            <Route path=":category/:postId" component={PostsComment} />
-            <Route path=":category/:postId/comment/new" component={PostsCommentNew} />
-            <Route path=":category/comment/:commentId/edit" component={PostsCommentEdit} />
-            <Route component={NotFound} />
-          </Route>
-        </Switch>
-
+        <Route exact path="/" component={App}>
+          <IndexRoute component={PostsIndex} />
+          <Route path="posts/new" component={PostsNew} />
+          <Route path="posts/:postId/edit" component={PostsEdit} />
+          <Route path=":category" component={PostsIndex} />
+          <Route path=":category/:postId" component={PostsComment} />
+          <Route path=":category/:postId/comment/new" component={PostsCommentNew} />
+          <Route path=":category/comment/:commentId/edit" component={PostsCommentEdit} />
+          <Route component={NotFound} />
+        </Route>
       </Router>
     </Provider>
   )

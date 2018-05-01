@@ -49,7 +49,6 @@ export class PostsComment extends React.Component {
     this.deletePost = this.deletePost.bind(this)
     this.deletePostModal = this.deletePostModal.bind(this)
     this.votePost = this.votePost.bind(this)
-    this.sleep - this.sleep.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.deleteCommentModal = this.deleteCommentModal.bind(this)
     this.voteComment = this.voteComment.bind(this)

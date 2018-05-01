@@ -66,8 +66,9 @@ export class PostsComment extends React.Component {
   }
 
   componentWillMount() {
+    this.context.store.dispatch(postsActions.fetchPost({ id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } } }))
+
     if (_.isEmpty(this.props.post)) {
-      this.context.store.dispatch(postsActions.fetchPost({ id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } } }))
       browserHistory.push(this.props.location.pathname)
       return
     }
@@ -95,8 +96,10 @@ export class PostsComment extends React.Component {
   }
 
   deleteComment(item, buttonValue) {
-    if (buttonValue === 'ok')
+    if (buttonValue === 'ok') {
       this.context.store.dispatch(commentsActions.deleteComment(item))
+      this.context.store.dispatch(postsActions.fetchPost({ id: this.props.routeParams.postId, props: { sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] } } }))
+    }
   }
 
   deleteCommentModal(comment) {
